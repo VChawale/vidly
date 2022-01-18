@@ -47,20 +47,14 @@ class Movies extends React.Component {
     this.setState({ sortColumn });
   };
 
-  render() {
-    const moviesCount = this.state.movies.length;
+  getPagedData = () => {
     const {
       pageSize,
       currentPage,
       movies: allMovies,
-      genres,
       selectedGenre,
       sortColumn,
     } = this.state;
-
-    if (moviesCount === 0) {
-      return <p> There are no movies in database</p>;
-    }
     const filterdMovies =
       selectedGenre && selectedGenre._id
         ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
@@ -72,7 +66,20 @@ class Movies extends React.Component {
       [sortColumn.order]
     );
 
-    const movies = paginate(sortedMovies, currentPage, pageSize);
+    const data = paginate(sortedMovies, currentPage, pageSize);
+
+    return { filterdMovies, data };
+  };
+
+  render() {
+    const moviesCount = this.state.movies.length;
+    const { pageSize, currentPage, genres, sortColumn } = this.state;
+
+    if (moviesCount === 0) {
+      return <p> There are no movies in database</p>;
+    }
+
+    const { filterdMovies, data: movies } = this.getPagedData();
 
     return (
       <div className="row">

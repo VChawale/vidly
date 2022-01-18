@@ -1,9 +1,12 @@
 import React from "react";
 
-const Filter = (props) => {
-  const { items, onItemSelect, textProperty, valueProperty, selectedItem } =
-    props;
-
+const Filter = ({
+  items,
+  onItemSelect,
+  textProperty,
+  valueProperty,
+  selectedItem,
+}) => {
   return (
     <ul className="list-group">
       {items.map((item) => (
@@ -11,9 +14,7 @@ const Filter = (props) => {
           key={item[valueProperty]}
           onClick={() => onItemSelect(item)}
           className={
-            selectedItem === item
-              ? "list-group-item active"
-              : "list-group-item"
+            selectedItem === item ? "list-group-item active" : "list-group-item"
           }
         >
           {item[textProperty]}
